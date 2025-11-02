@@ -1,1 +1,1 @@
-7 lab 
+7 lab darbas
