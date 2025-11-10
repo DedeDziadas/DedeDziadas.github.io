@@ -1,1 +1,1 @@
-7 lab darbas
+7,8 lab html
