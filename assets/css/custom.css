@@ -175,7 +175,7 @@ a:not(.navmenu a):active {
 }
 
 .scroll-top:hover {
-  background-color:#7a0202;
+  background-color:#161616;
   color: #7c3939;
   box-shadow: 0 6px 20px rgba(156, 0, 0, 0.6);
 }
