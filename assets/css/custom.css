@@ -3,6 +3,9 @@ body, p, h4, h6 {
   font-weight: 300;
   color: #000000;
   line-height: 1.6;
+}
+
+body{
   background: #F0F4F8 !important;
 }
 
@@ -71,7 +74,6 @@ a {
 
 a:not(.navmenu a):hover {
     color: #7a0202 !important;
-    background: #212529;
     text-decoration: none;
 }
 
@@ -99,12 +101,12 @@ a:not(.navmenu a):active {
 }
 
 .navmenu a {
-  color: #000000;              /* Teksto spalva */
-  text-decoration: none;    /* Pašalinti pabraukimą */
+  color: #000000; 
+  text-decoration: none;
 }
 
 .navmenu {
-  box-shadow: 0 10px 10px #7a0303; /* Švelnus šešėlis */
+  box-shadow: 0 10px 10px #7a0303;
   font-weight: 500;
     transition: all 0.3s ease;
     background: transparent !important;
@@ -119,7 +121,6 @@ a:not(.navmenu a):active {
     margin: 20px;
 
 }
-
 
 .container, .content-block, .card, .portfolio-item, .resume-item {
     border-radius: 8px;
@@ -145,7 +146,6 @@ a:not(.navmenu a):active {
   width: 1px;
   height: 12px;
   transition: 0.9s;
-  background-color: var(--accent-color);
   box-shadow: 0 2px 4px rgba(156, 0, 0, 0.3);
 }
 .skills .progress-bar:hover {
@@ -185,13 +185,6 @@ a:not(.navmenu a):active {
   opacity: 1;
   bottom: 15px;
   box-shadow: 0 3px 10px rgba(156, 0, 0, 0.5);
-}
-
-.scroll-top i:hover {
-  font-size: 24px;
-  color: #7a0202;
-  line-height: 0;
-  box-shadow: 0 6px 20px rgba(156, 0, 0, 0.6);
 }
 
 ol {
@@ -296,6 +289,7 @@ ol li::before {
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  font-weight: bold;
 }
 
 .services-table thead th {
@@ -320,4 +314,173 @@ ol li::before {
 .services-table tbody tr:hover td {
   background: #7a0202;
   border : 1px solid #000000;
+  color:#F0F4F8;
+  text-shadow:#F0F4F8 ;
+}
+
+
+@keyframes iconBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.social-links a{
+    display: inline-block;
+    animation: iconBounce 1.5s infinite ease-in-out;
+}
+
+.portfolio-item {
+    transition: transform 0.4s ease;
+}
+.portfolio-item:hover {
+    transform: scale(1.05);
+}
+
+.info-item i {
+    animation: pulseIcon 2s infinite;
+}
+
+@keyframes pulseIcon {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.portfolio-container {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+}
+
+.portfolio-item {
+    width: 46% !important;
+    margin: 2% !important;
+}
+
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  overflow: hidden;
+  background: var(--background-color);
+  transition: all 0.6s ease-out;
+}
+
+#preloader:before {
+  content: "";
+  position: fixed;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  border: 6px solid #ffffff;
+  border-color: var(--accent-color) transparent var(--accent-color) transparent;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: animate-preloader 1.5s linear infinite;
+}
+
+@keyframes animate-preloader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+  #preloader {
+    transition: none !important;
+  }
+
+  #preloader:before {
+    animation: none !important;
+    border-color: var(--accent-color);
+  }
+
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+.services {
+    background: linear-gradient(-45deg, #7a0202, #b38a8a, #9c0000, #5f0000);
+    background-size: 400% 400%;
+    animation: gradientMove 12s ease infinite;
+    padding: 70px 0 !important;
+    border-radius: 10px;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.services { 
+    background: linear-gradient(180deg, #F0F4F8 0%, #9c0000 100%) !important;
+    padding: 70px 0 !important;
+    border-radius: 10px;
+    animation: colorTransition 3s ease-in-out infinite alternate;
+}
+
+@keyframes colorTransition {
+    0% { 
+        filter: hue-rotate(0deg) brightness(1);
+    }
+    100% { 
+        filter: hue-rotate(20deg) brightness(1.1);
+    }
+}
+
+
+.about {
+    position: relative;
+    overflow: hidden; /* Kad figūros neišeitų už sekcijos ribų */
+}
+
+.shape {
+    position: absolute;
+    opacity: 0.7;
+    z-index: -1; /* Figūros eina į foną */
+}
+
+.shape-square2 {
+    width: 70px;
+    height: 70px;
+    background: #770000;
+    top: 500px;
+    right: 300px;
+    animation: sukis 4s ease-in-out infinite;
+}
+
+.shape-square1 {
+    width: 20px;
+    height: 20px;
+    background: #000000;
+    top: 525px;
+    right: 325px;
+    animation: sukis 2s ease-in-out infinite;
+}
+
+@keyframes sukis {
+    0%, 100% { 
+        transform: scale(1) rotate(0deg); 
+    }
+    50% { 
+        transform: scale(1.5) rotate(360deg); 
+    }
+    100% { 
+        transform: scale(1) rotate(360deg); 
+    }
 }
