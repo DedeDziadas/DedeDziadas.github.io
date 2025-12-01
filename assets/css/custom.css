@@ -446,13 +446,13 @@ ol li::before {
 
 .about {
     position: relative;
-    overflow: hidden; /* Kad figūros neišeitų už sekcijos ribų */
+    overflow: hidden;
 }
 
 .shape {
     position: absolute;
     opacity: 0.7;
-    z-index: -1; /* Figūros eina į foną */
+    z-index: -1;
 }
 
 .shape-square2 {
@@ -483,4 +483,143 @@ ol li::before {
     100% { 
         transform: scale(1) rotate(360deg); 
     }
+}
+
+
+.popup-message {
+  position: fixed;
+  left: 50vw;
+  top: 100px;
+  width: 50%;
+  background: #28a745;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  font-size: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  opacity: 0;
+  transform: translate(-50%, 20px);
+  transition: 1s ease;
+  z-index: 9999;
+}
+
+.popup-message.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.submit-btn {
+  position: relative;
+  padding: 14px 28px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  background: linear-gradient(90deg, #7a0202, #b62222);
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(156, 0, 0, 0.4);
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+}
+
+
+.submit-btn::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #ff0000, #7a0202, #b62222);
+  z-index: -1;
+  background-size: 300% 300%;
+  animation: movingBorder 3s linear infinite;
+}
+
+@keyframes movingBorder {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.submit-btn:active {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(156, 0, 0, 0.6);
+}
+
+
+input, textarea, select {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #9c0000;
+  background: #ffffff;
+  font-size: 16px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 6px rgba(156, 0, 0, 0.3);
+  transition: 0.3s ease;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: #7a0202;
+  box-shadow: 0 0 10px rgba(156, 0, 0, 0.6);
+  transform: scale(1.01);
+}
+
+#form-output {
+  margin-top: 30px;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(156, 0, 0, 0.5);
+  border: 1px solid #9c0000;
+  animation: fadeIn 0.5s ease forwards;
+  opacity: 0;
+}
+
+#form-output p {
+  margin: 6px 0;
+  font-size: 17px;
+}
+
+#form-output h4 {
+  margin-bottom: 12px;
+  color: #7a0202;
+  font-weight: 600;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#form-output {
+  display: none;
+  margin-top: 30px;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(156, 0, 0, 0.5);
+  border: 1px solid #9c0000;
+  opacity: 0;
+  transition: 0.4s ease;
+}
+
+input.error, textarea.error {
+  border-color: #ff0000 !important;
+  box-shadow: 0 0 10px rgba(255,0,0,0.3) !important;
+}
+
+small.error {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: 4px;
+  display: block;
 }
