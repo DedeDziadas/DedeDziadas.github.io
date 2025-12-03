@@ -105,3 +105,198 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(()=>output.style.opacity="1",10);
     });
 });
+
+
+
+
+
+const icons = [
+    "assets/img/cards/aceofspades.png",
+    "assets/img/cards/aceofhearts.png",
+    "assets/img/cards/aceofdiamonds.png",
+    "assets/img/cards/aceofidk.png",
+    "assets/img/cards/trolekas.png",
+    "assets/img/cards/kazkoksdede.png",
+    "assets/img/cards/dede.png",
+    "assets/img/cards/saddede.png",
+    "assets/img/cards/saulius.png",
+    "assets/img/cards/katinasmiega.png",
+    "assets/img/cards/phasmophobia.png",
+    "assets/img/cards/gargamelis.png",
+];
+
+icons.forEach(src => {
+    const img = new Image();
+    img.src = src;
+});
+
+let firstCard = null;
+let secondCard = null;
+let lockBoard = false;
+let moves = 0;
+let matches = 0;
+let totalPairs = 6;
+
+let timer = 0;
+let timerInterval = null;
+
+const timerEl = document.getElementById("timer");
+const bestEasyEl = document.getElementById("bestEasy");
+const bestHardEl = document.getElementById("bestHard");
+
+const board = document.getElementById("gameBoard");
+const movesEl = document.getElementById("moves");
+const matchesEl = document.getElementById("matches");
+const winMessage = document.getElementById("winMessage");
+
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+function generateBoard(size) {
+    board.innerHTML = "";
+    winMessage.textContent = "";
+
+    let fullSet = [...icons.slice(0, size)].flatMap(i => [i, i]);
+    fullSet = shuffle(fullSet);
+
+    board.style.gridTemplateColumns = size === 6 ? "repeat(4, 80px)" : "repeat(6, 80px)";
+    totalPairs = size;
+
+    fullSet.forEach(imgSrc => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.dataset.icon = imgSrc;
+
+        card.innerHTML = `<img src="${imgSrc}" class="card-img">`;
+
+        card.addEventListener("click", flipCard);
+        board.appendChild(card);
+    });
+}
+
+function flipCard() {
+    if (lockBoard || this.classList.contains("flip") || this.classList.contains("matched")) return;
+
+    this.classList.add("flip");
+
+    if (!firstCard) {
+        firstCard = this;
+    } else {
+        secondCard = this;
+        moves++;
+        movesEl.textContent = moves;
+        checkMatch();
+    }
+}
+
+function checkMatch() {
+    if (firstCard.dataset.icon === secondCard.dataset.icon) {
+        firstCard.classList.add("matched");
+        secondCard.classList.add("matched");
+
+        matches++;
+        matchesEl.textContent = matches;
+
+        resetTurn();
+
+        if (matches === totalPairs) {
+            stopTimer();
+
+            const difficulty = document.getElementById("difficulty").value;
+            const key = difficulty === "easy" ? "best_easy" : "best_hard";
+            const best = localStorage.getItem(key);
+
+            if (!best || moves < Number(best)) {
+                localStorage.setItem(key, moves);
+                loadBestScores();
+            }
+
+            winMessage.textContent = `🎉 Laimėjote per ${moves} ėjimus ir ${timer.toFixed(1)} s!`;
+        }
+
+    } else {
+        lockBoard = true;
+        setTimeout(() => {
+            firstCard.classList.remove("flip");
+            secondCard.classList.remove("flip");
+            resetTurn();
+        }, 700);
+    }
+}
+
+function resetTurn() {
+    [firstCard, secondCard, lockBoard] = [null, null, false];
+}
+
+function startGame() {
+    const difficulty = document.getElementById("difficulty").value;
+
+    moves = 0;
+    matches = 0;
+    movesEl.textContent = 0;
+    matchesEl.textContent = 0;
+    winMessage.textContent = "";
+
+    firstCard = null;
+    secondCard = null;
+    lockBoard = false;
+
+    stopTimer();
+    startTimer();
+
+    if (difficulty === "easy") generateBoard(6);
+    else generateBoard(12);
+}
+
+function resetGame() {
+    const difficulty = document.getElementById("difficulty").value;
+
+    moves = 0;
+    matches = 0;
+    movesEl.textContent = 0;
+    matchesEl.textContent = 0;
+    winMessage.textContent = "";
+
+    stopTimer();
+    timerEl.textContent = "0.0";
+
+    firstCard = null;
+    secondCard = null;
+    lockBoard = false;
+
+    if (difficulty === "easy") generateBoard(6);
+    else generateBoard(12);
+}
+
+document.getElementById("startGame").addEventListener("click", startGame);
+document.getElementById("resetGame").addEventListener("click", resetGame);
+
+function loadBestScores() {
+    const easy = localStorage.getItem("best_easy");
+    const hard = localStorage.getItem("best_hard");
+
+    bestEasyEl.textContent = easy ? easy : "—";
+    bestHardEl.textContent = hard ? hard : "—";
+}
+
+loadBestScores();
+
+function startTimer() {
+    clearInterval(timerInterval);
+    timer = 0;
+    timerEl.textContent = "0.0";
+
+    timerInterval = setInterval(() => {
+        timer += 0.1;
+        timerEl.textContent = timer.toFixed(1);
+    }, 100);
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+}
