@@ -609,6 +609,38 @@
 
     </section><!-- /Contact Section -->
 
+    <!-- Memory Game Section -->
+
+    <section id="memory-game" class="memory-section">
+        <h2>Mano Žaidimas</h2>
+
+        <div id="stats" class="stats">
+          <p>Easy geriausias: <span id="bestEasy">—</span></p>
+          <p>Hard geriausias: <span id="bestHard">—</span></p>
+          <p>⏱ Laikas: <span id="timer">0.0</span> s</p>
+        </div>
+
+        <div class="game-controls">
+            <label>Sunkumo lygis:</label>
+            <select id="difficulty" class="difficulty-bar">
+                <option value="easy">Lengvas (4×3)</option>
+                <option value="hard">Sunkus (6×4)</option>
+            </select>
+
+            <button id="startGame" >Start</button>
+            <button id="resetGame" >Atnaujinti</button>
+        </div>
+
+        <div class="stats">
+            <p>Ėjimai: <span id="moves">0</span></p>
+            <p>Sutapę: <span id="matches">0</span></p>
+        </div>
+
+        <div id="gameBoard" class="board"></div>
+
+        <p id="winMessage" class="win-message"></p>
+    </section>
+
   </main>
 
   <footer id="footer" class="footer position-relative light-background">
